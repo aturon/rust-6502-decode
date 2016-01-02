@@ -1,0 +1,6 @@
+[package]
+name = "6502-decode"
+version = "0.1.0"
+authors = ["Aaron Turon <aturon@mozilla.com>"]
+
+[dependencies]
