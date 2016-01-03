@@ -29,7 +29,7 @@ pub trait InterpretInstruction {
     fn stx<A: Arg>(&mut self, arg: A) -> Self::Output;
 
     /// Store Y
-    fn sty<A: Arg>(&mut self, arg: A) -> Self::Output;
+    fn sty<A: Arg>(& self, arg: A) -> Self::Output;
 
     // Arithmetic
 
@@ -209,7 +209,43 @@ pub trait Arg {
     fn interpret<I: InterpretArg>(&self, interp: I) -> I::Output;
 }
 
-pub trait InterpretArg {
+#[allow(unused_variables)]
+pub trait InterpretArg: Sized {
     type Output;
 
+    /// A constant value: `#aa`
+    fn immediate(self, val: u8) -> Self::Output { unimplemented!() }
+
+    /// A constant address: `aaaa`
+    fn absolute(self, addr: u16) -> Self::Output { unimplemented!() }
+
+    /// A constant address, plus X register: `aaaa,X
+    fn absolute_x(self, addr: u16) -> Self::Output { unimplemented!() }
+
+    /// A constant address, plus Y register: `aaaa,Y`
+    fn absolute_y(self, addr: u16) -> Self::Output { unimplemented!() }
+
+    /// A constant address, dereferenced: `(aaaa)`
+    fn indirect(self, addr: u16) -> Self::Output { unimplemented!() }
+
+    /// Index within zero page: `aa`
+    fn zero_page(self, index: u8) -> Self::Output { unimplemented!() }
+
+    /// Index within zero page, plus X register: `aa,X`
+    fn zero_page_x(self, index: u8) -> Self::Output { unimplemented!() }
+
+    /// Index within zero page, plus Y register: `aa,Y`
+    fn zero_page_y(self, index: u8) -> Self::Output { unimplemented!() }
+
+    /// Index within zero page, plus X register, indirected: `(aa,X)`
+    fn indexed_indirect(self, index: u8) -> Self::Output { unimplemented!() }
+
+    /// Index within zero page, indirected, plus Y register: `(aa),Y`
+    fn indirect_indexed(self, index: u8) -> Self::Output { unimplemented!() }
+
+    /// Relative address: `aa`
+    fn relative(self, addr: u8) -> Self::Output { unimplemented!() }
+
+    /// Accumulator: `A`
+    fn accumulator(self) -> Self::Output { unimplemented!() }
 }
